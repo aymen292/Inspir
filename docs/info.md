@@ -11,3 +11,18 @@
 ### PostgreSQL : 
 `brew services start postgresql@18` <br> 
 `pg_isready` Afin de vérifier 
+
+### Redis (docker) : 
+`docker start redis-bienetre`
+`docker exec -it redis-bienetre redis-cli ping` afin de verifier 
+Attendu : PONG 
+
+### Lancer le FastAPI 
+`uvicorn app.main:app --reload`
+
+### Fin de session : 
+```bash 
+brew services stop postgresql@14
+docker stop redis-bienetre 
+``` 
+
