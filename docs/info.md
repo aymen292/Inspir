@@ -1,8 +1,13 @@
-mot de passe de l'utilisateur `bienetre_user` : `bienetre2026` 
+ ### mot de passe de l'utilisateur `bienetre_user` : `bienetre2026` 
 
-commande pour lancer le serveur : `uvicorn app.main:app --reload --reload-exclude "venv/*"`
+### commande pour lancer le serveur : `uvicorn app.main:app --reload --reload-exclude "venv/*"`
 
-lien pour accéder au serveur API : `http://127.0.0.1:8000/docs`
+### lien pour accéder au serveur API : `http://127.0.0.1:8000/docs`
 
-lancer le venv : `source venv/bin/activate`
-desactiver le venv : `deactivate` 
+### lancer le venv : `source venv/bin/activate`
+### desactiver le venv : `deactivate` 
+
+## Rituel de démarrage 
+### PostgreSQL : 
+`brew services start postgresql@18` <br> 
+`pg_isready` Afin de vérifier 
