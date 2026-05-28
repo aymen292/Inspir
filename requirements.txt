@@ -14,4 +14,4 @@ pydantic[email]==2.7.1
 pydantic-settings==2.2.1
 httpx==0.27.0
 stripe==9.5.0
-pywebpush==2.0.0
+pywebpush==2.0.0aiofiles==23.2.1

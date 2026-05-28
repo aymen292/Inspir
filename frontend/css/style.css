@@ -1,0 +1,354 @@
+/* ── Variables de couleur ─────────────────────────────────────────── */
+:root {
+  --couleur-principale: #4a7c59;
+  --couleur-principale-claire: #6aab7e;
+  --couleur-fond: #f8f5f0;
+  --couleur-fond-carte: #ffffff;
+  --couleur-texte: #2d2d2d;
+  --couleur-texte-doux: #6b6b6b;
+  --couleur-bordure: #e8e3dc;
+  --couleur-premium: #c9a227;
+  --ombre-carte: 0 2px 12px rgba(0, 0, 0, 0.07);
+  --rayon-bordure: 14px;
+  --police: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ── Reset et base ────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--police);
+  background-color: var(--couleur-fond);
+  color: var(--couleur-texte);
+  min-height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* ── En-tête ──────────────────────────────────────────────────────── */
+.app-header {
+  background-color: var(--couleur-principale);
+  color: white;
+  padding: 20px 20px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.app-header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.app-header p {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+
+/* ── Contenu principal ────────────────────────────────────────────── */
+.app-content {
+  padding: 20px 16px;
+}
+
+/* ── Filtres ──────────────────────────────────────────────────────── */
+.filtres {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  margin-bottom: 20px;
+  scrollbar-width: none;
+}
+
+.filtres::-webkit-scrollbar { display: none; }
+
+.filtre-btn {
+  background: var(--couleur-fond-carte);
+  border: 1.5px solid var(--couleur-bordure);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  color: var(--couleur-texte-doux);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.filtre-btn.actif,
+.filtre-btn:hover {
+  background: var(--couleur-principale);
+  color: white;
+  border-color: var(--couleur-principale);
+}
+
+/* ── Cartes de routines ───────────────────────────────────────────── */
+.section-titre {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--couleur-texte);
+  margin-bottom: 12px;
+}
+
+.routines-grille {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.carte-routine {
+  background: var(--couleur-fond-carte);
+  border-radius: var(--rayon-bordure);
+  padding: 16px;
+  box-shadow: var(--ombre-carte);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  border: 1.5px solid transparent;
+}
+
+.carte-routine:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.11);
+  border-color: var(--couleur-principale-claire);
+}
+
+.carte-entete {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.carte-categorie {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--couleur-principale);
+  background: #eef4f0;
+  padding: 3px 8px;
+  border-radius: 10px;
+}
+
+.carte-premium {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--couleur-premium);
+  background: #fdf8e7;
+  padding: 3px 8px;
+  border-radius: 10px;
+}
+
+.carte-titre {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.carte-description {
+  font-size: 0.84rem;
+  color: var(--couleur-texte-doux);
+  line-height: 1.5;
+  margin-bottom: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.carte-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 0.78rem;
+  color: var(--couleur-texte-doux);
+}
+
+.carte-meta span::before { margin-right: 4px; }
+
+/* ── État de chargement ───────────────────────────────────────────── */
+.chargement {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--couleur-texte-doux);
+  font-size: 0.9rem;
+}
+
+.erreur {
+  text-align: center;
+  padding: 30px 20px;
+  color: #c0392b;
+  background: #fdf0ef;
+  border-radius: var(--rayon-bordure);
+  font-size: 0.88rem;
+}
+
+/* ── Page de détail d'une routine ─────────────────────────────────── */
+.retour-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: white;
+  text-decoration: none;
+  font-size: 0.88rem;
+  opacity: 0.9;
+  margin-bottom: 4px;
+}
+
+.routine-titre {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.routine-meta-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.badge {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: #eef4f0;
+  color: var(--couleur-principale);
+}
+
+.routine-description {
+  font-size: 0.92rem;
+  color: var(--couleur-texte-doux);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  padding: 14px 16px;
+  background: var(--couleur-fond-carte);
+  border-radius: 10px;
+  border-left: 3px solid var(--couleur-principale);
+}
+
+/* ── Étapes ───────────────────────────────────────────────────────── */
+.etapes-container { margin-bottom: 30px; }
+
+.etapes-titre {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+  color: var(--couleur-texte);
+}
+
+.etape {
+  display: flex;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--couleur-bordure);
+  transition: opacity 0.2s ease;
+}
+
+.etape:last-child { border-bottom: none; }
+
+.etape.completee { opacity: 0.45; }
+
+.etape-numero {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  border-radius: 50%;
+  background: var(--couleur-principale);
+  color: white;
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.etape.completee .etape-numero { background: #b0c9b8; }
+
+.etape-texte {
+  font-size: 0.93rem;
+  line-height: 1.55;
+  padding-top: 4px;
+}
+
+/* ── Minuteur ─────────────────────────────────────────────────────── */
+.minuteur-bloc {
+  background: var(--couleur-fond-carte);
+  border-radius: var(--rayon-bordure);
+  padding: 20px;
+  text-align: center;
+  box-shadow: var(--ombre-carte);
+  margin-bottom: 20px;
+  border: 1.5px solid var(--couleur-bordure);
+}
+
+.minuteur-affichage {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--couleur-principale);
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.minuteur-controles {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.btn-minuteur {
+  padding: 10px 24px;
+  border-radius: 24px;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-principal {
+  background: var(--couleur-principale);
+  color: white;
+  min-width: 110px;
+}
+
+.btn-principal:hover { background: var(--couleur-principale-claire); }
+
+.btn-secondaire {
+  background: var(--couleur-fond);
+  color: var(--couleur-texte-doux);
+  border: 1.5px solid var(--couleur-bordure);
+}
+
+.btn-secondaire:hover { background: var(--couleur-bordure); }
+
+/* ── Bouton commencer ─────────────────────────────────────────────── */
+.btn-commencer {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  background: var(--couleur-principale);
+  color: white;
+  border: none;
+  border-radius: var(--rayon-bordure);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 24px;
+  transition: background 0.15s ease;
+}
+
+.btn-commencer:hover { background: var(--couleur-principale-claire); }
+
+/* ── Responsive ───────────────────────────────────────────────────── */
+@media (max-width: 380px) {
+  .app-content { padding: 16px 12px; }
+  .minuteur-affichage { font-size: 2.4rem; }
+}

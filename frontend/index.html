@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Micro-routines de bien-être en français — Inspir" />
+  <meta name="theme-color" content="#4a7c59" />
+  <title>Inspir — Bien-être quotidien</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+</head>
+<body>
+
+  <header class="app-header">
+    <h1>🌿 Inspir</h1>
+    <p>Ton moment de bien-être</p>
+  </header>
+
+  <main class="app-content">
+
+    <!-- Filtres par catégorie -->
+    <div class="filtres" id="filtres-categorie">
+      <button class="filtre-btn actif" data-categorie="">Tout</button>
+      <button class="filtre-btn" data-categorie="Stress">Stress</button>
+      <button class="filtre-btn" data-categorie="Sommeil">Sommeil</button>
+      <button class="filtre-btn" data-categorie="Concentration">Concentration</button>
+      <button class="filtre-btn" data-categorie="Mouvement">Mouvement</button>
+      <button class="filtre-btn" data-categorie="Émotions">Émotions</button>
+      <button class="filtre-btn" data-categorie="Énergie">Énergie</button>
+    </div>
+
+    <!-- Liste des routines -->
+    <h2 class="section-titre">Toutes les routines</h2>
+    <div class="routines-grille" id="liste-routines">
+      <p class="chargement">Chargement des routines…</p>
+    </div>
+
+  </main>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/home.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js');
+    }
+  </script>
+</body>
+</html>
