@@ -7,15 +7,15 @@ from app.database import Base
 class Routine(Base):
     __tablename__ = "routines"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    titre = Column(String, nullable=False)
-    description = Column(Text, nullable=True)
-    categorie = Column(String, nullable=False)
-    duree_minutes = Column(Integer, nullable=False)
-    moment = Column(String, nullable=True)
-    niveau = Column(String, default="Débutant")
-    profil_cible = Column(String, default="Universel")
-    humeur_declencheur = Column(String, nullable=True)
-    etapes = Column(JSONB, nullable=False)
-    is_premium = Column(Boolean, default=False)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    id               = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    titre            = Column(String, nullable=False)
+    description      = Column(Text, nullable=True)
+    categorie        = Column(String, nullable=False, index=True)
+    duree_minutes    = Column(Integer, nullable=False)
+    moment           = Column(String, nullable=True)          # Matin, Après-midi, Soir, Nuit, N'importe quand
+    niveau           = Column(String, default="Débutant")
+    profil_cible     = Column(String, default="Universel")    # Universel, Salarié, Parent, Senior, Étudiant
+    humeur_declencheur = Column(String, nullable=True)        # Anxieux, Fatigué, Démotivé, Tendu, Agité...
+    etapes           = Column(JSONB, nullable=False)          # Liste ordonnée des étapes
+    is_premium       = Column(Boolean, default=False)
+    created_at       = Column(DateTime(timezone=True), server_default=func.now())
