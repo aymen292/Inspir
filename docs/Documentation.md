@@ -229,21 +229,25 @@ Utilisateur (téléphone / ordinateur)
 | Monitoring | Prometheus + Grafana | Observabilité complète de l'infrastructure |
 | Analytics produit | PostHog | Open source, auto-hébergeable, RGPD-friendly |
 
-### Structure du backend
+### Structure du projet
 
 ```
-backend/
+Inspir/
 ├── app/
+│   ├── __init__.py
 │   ├── main.py                  ← point d'entrée FastAPI
 │   ├── config.py                ← variables d'environnement
 │   ├── database.py              ← connexion PostgreSQL
+│   ├── docker                   ← configuration Docker de l'app
 │   ├── models/
+│   │   ├── __init__.py
 │   │   ├── user.py              ← table utilisateurs
 │   │   ├── routine.py           ← table routines
 │   │   ├── session.py           ← table sessions (routine complétée)
 │   │   ├── mood.py              ← table suivi d'humeur
 │   │   └── streak.py            ← table streaks
 │   ├── routes/
+│   │   ├── __init__.py
 │   │   ├── auth.py              ← inscription, connexion, déconnexion
 │   │   ├── routines.py          ← liste, détail, filtres
 │   │   ├── sessions.py          ← complétion d'une routine
@@ -251,18 +255,37 @@ backend/
 │   │   ├── streaks.py           ← calcul et affichage du streak
 │   │   └── payments.py          ← webhooks Stripe, gestion abonnement
 │   ├── services/
+│   │   ├── __init__.py
+│   │   ├── auth_service.py      ← logique d'authentification JWT
 │   │   ├── recommendations.py   ← logique de suggestion de routines
 │   │   ├── notifications.py     ← envoi des push notifications
+│   │   ├── redis_service.py     ← interactions avec Redis
 │   │   └── analytics.py         ← événements produit
 │   └── schemas/
+│       ├── __init__.py
 │       ├── user.py              ← validation des données utilisateur
 │       ├── routine.py           ← validation des données routine
 │       └── mood.py              ← validation des données humeur
-├── migrations/                  ← scripts de migration base de données
+├── migrations/                  ← migrations Alembic
+│   ├── env.py
+│   ├── README
+│   ├── script.py.mako
+│   └── versions/
+│       └── 40708b00e628_create_users_and_routines_tables.py
 ├── seeds/                       ← scripts d'insertion des routines initiales
 ├── tests/                       ← tests unitaires et d'intégration
+├── docs/
+│   ├── Documentation.md         ← documentation complète du projet
+│   └── info.md
+├── guide/
+│   ├── guide_semaine_1.md
+│   └── guide_semaine_2.md
+├── alembic.ini                  ← configuration Alembic
+├── docker-compose.yml           ← orchestration Docker (PostgreSQL, Redis)
 ├── requirements.txt             ← dépendances Python
-└── .env                         ← clés secrètes (jamais sur Git)
+├── README.md
+├── .env                         ← clés secrètes (jamais sur Git)
+└── .env.example                 ← modèle de variables d'environnement
 ```
 
 ### Modèle de données principal
