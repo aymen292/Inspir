@@ -35,11 +35,17 @@
 /* ── Reset ────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* Fix Safari 100vh : -webkit-fill-available couvre la vraie hauteur visible */
+html {
+  height: -webkit-fill-available;
+}
+
 body {
   font-family: var(--font);
   background-color: var(--bg);
   color: var(--text);
   min-height: 100vh;
+  min-height: 100dvh; /* viewport dynamique : exclut la barre URL/tab Safari */
   max-width: 480px;
   margin: 0 auto;
   -webkit-font-smoothing: antialiased;
@@ -49,6 +55,7 @@ body {
 .app-header {
   background: var(--card);
   padding: 10px 20px;
+  position: -webkit-sticky; /* Safari < 13 */
   position: sticky;
   top: 0;
   z-index: 100;
@@ -103,7 +110,8 @@ body {
 
 /* ── Contenu principal ────────────────────────────────────────────── */
 .app-content {
-  padding: 20px 16px 32px;
+  /* env(safe-area-inset-bottom) : espace pour l'indicateur home en bas (Safari browser + PWA) */
+  padding: 20px 16px calc(32px + env(safe-area-inset-bottom, 0px));
 }
 
 /* ── Filtres ──────────────────────────────────────────────────────── */
@@ -111,6 +119,7 @@ body {
   display: flex;
   gap: 8px;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* scroll momentum sur Safari */
   padding-bottom: 4px;
   margin-bottom: 20px;
   scrollbar-width: none;
@@ -528,7 +537,7 @@ body {
 
 /* ── Responsive ───────────────────────────────────────────────────── */
 @media (max-width: 380px) {
-  .app-content { padding: 16px 12px 28px; }
+  .app-content { padding: 16px 12px calc(28px + env(safe-area-inset-bottom, 0px)); }
   .minuteur-affichage { font-size: 2.5rem; }
   .header-logo { height: 44px; }
 }
