@@ -1,55 +1,109 @@
-/* ── Variables de couleur ─────────────────────────────────────────── */
+/* ── Variables ────────────────────────────────────────────────────── */
 :root {
-  --couleur-principale: #4a7c59;
-  --couleur-principale-claire: #6aab7e;
-  --couleur-fond: #f8f5f0;
-  --couleur-fond-carte: #ffffff;
-  --couleur-texte: #2d2d2d;
-  --couleur-texte-doux: #6b6b6b;
-  --couleur-bordure: #e8e3dc;
-  --couleur-premium: #c9a227;
-  --ombre-carte: 0 2px 12px rgba(0, 0, 0, 0.07);
-  --rayon-bordure: 14px;
-  --police: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --teal:          #2B7EA0;
+  --teal-dark:     #1D6080;
+  --teal-light:    #E6F3F8;
+  --green:         #52A872;
+  --green-light:   #EAF5EF;
+  --gold:          #D48820;
+  --gold-light:    #FDF5E6;
+  --bg:            #F5F0E8;
+  --card:          #FFFFFF;
+  --text:          #1C3848;
+  --text-soft:     #5A7A88;
+  --border:        #E0D8D0;
+  --shadow:        0 2px 16px rgba(27, 80, 110, 0.08);
+  --shadow-hover:  0 6px 24px rgba(27, 80, 110, 0.14);
+  --radius:        14px;
+  --font:          'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+
+  /* Couleurs par catégorie */
+  --cat-stress-color:        #C94040;
+  --cat-stress-bg:           #FDF0F0;
+  --cat-sommeil-color:       #4A6ED6;
+  --cat-sommeil-bg:          #EEF1FD;
+  --cat-concentration-color: #2B7EA0;
+  --cat-concentration-bg:    #E6F3F8;
+  --cat-mouvement-color:     #52A872;
+  --cat-mouvement-bg:        #EAF5EF;
+  --cat-emotions-color:      #A040A0;
+  --cat-emotions-bg:         #F8EEF8;
+  --cat-energie-color:       #D48820;
+  --cat-energie-bg:          #FDF5E6;
 }
 
-/* ── Reset et base ────────────────────────────────────────────────── */
+/* ── Reset ────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: var(--police);
-  background-color: var(--couleur-fond);
-  color: var(--couleur-texte);
+  font-family: var(--font);
+  background-color: var(--bg);
+  color: var(--text);
   min-height: 100vh;
   max-width: 480px;
   margin: 0 auto;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ── En-tête ──────────────────────────────────────────────────────── */
+/* ── En-tête principal (page d'accueil) ───────────────────────────── */
 .app-header {
-  background-color: var(--couleur-principale);
-  color: white;
-  padding: 20px 20px 16px;
+  background: var(--card);
+  padding: 10px 20px;
   position: sticky;
   top: 0;
   z-index: 100;
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 8px rgba(27, 80, 110, 0.07);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.app-header h1 {
-  font-size: 1.4rem;
-  font-weight: 700;
-  letter-spacing: -0.3px;
+.header-logo {
+  height: 52px;
+  width: auto;
+  object-fit: contain;
 }
 
-.app-header p {
-  font-size: 0.85rem;
-  opacity: 0.85;
-  margin-top: 2px;
+/* ── En-tête secondaire (page de détail) ─────────────────────────── */
+.app-header--sub {
+  background: var(--teal);
+  color: white;
+  padding: 14px 20px 12px;
+  box-shadow: 0 2px 12px rgba(27, 80, 110, 0.2);
 }
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.header-marque {
+  font-size: 0.82rem;
+  font-weight: 600;
+  opacity: 0.75;
+  letter-spacing: 0.5px;
+}
+
+.retour-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: white;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  opacity: 0.9;
+  transition: opacity 0.15s ease;
+}
+
+.retour-btn:hover { opacity: 1; }
 
 /* ── Contenu principal ────────────────────────────────────────────── */
 .app-content {
-  padding: 20px 16px;
+  padding: 20px 16px 32px;
 }
 
 /* ── Filtres ──────────────────────────────────────────────────────── */
@@ -65,12 +119,13 @@ body {
 .filtres::-webkit-scrollbar { display: none; }
 
 .filtre-btn {
-  background: var(--couleur-fond-carte);
-  border: 1.5px solid var(--couleur-bordure);
+  background: var(--card);
+  border: 1.5px solid var(--border);
   border-radius: 20px;
-  padding: 6px 14px;
+  padding: 7px 15px;
   font-size: 0.82rem;
-  color: var(--couleur-texte-doux);
+  font-weight: 500;
+  color: var(--text-soft);
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.15s ease;
@@ -78,131 +133,153 @@ body {
 
 .filtre-btn.actif,
 .filtre-btn:hover {
-  background: var(--couleur-principale);
+  background: var(--teal);
   color: white;
-  border-color: var(--couleur-principale);
+  border-color: var(--teal);
 }
 
-/* ── Cartes de routines ───────────────────────────────────────────── */
+/* ── Titre de section ─────────────────────────────────────────────── */
 .section-titre {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: var(--couleur-texte);
-  margin-bottom: 12px;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
 }
 
+/* ── Grille des routines ──────────────────────────────────────────── */
 .routines-grille {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
+/* ── Carte de routine ─────────────────────────────────────────────── */
 .carte-routine {
-  background: var(--couleur-fond-carte);
-  border-radius: var(--rayon-bordure);
-  padding: 16px;
-  box-shadow: var(--ombre-carte);
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 16px 16px 14px;
+  box-shadow: var(--shadow);
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
   text-decoration: none;
   color: inherit;
   display: block;
-  border: 1.5px solid transparent;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--teal);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .carte-routine:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.11);
-  border-color: var(--couleur-principale-claire);
+  box-shadow: var(--shadow-hover);
 }
+
+/* Bordures gauche par catégorie */
+.carte-routine.cat-stress        { border-left-color: var(--cat-stress-color); }
+.carte-routine.cat-sommeil       { border-left-color: var(--cat-sommeil-color); }
+.carte-routine.cat-concentration { border-left-color: var(--cat-concentration-color); }
+.carte-routine.cat-mouvement     { border-left-color: var(--cat-mouvement-color); }
+.carte-routine.cat-emotions      { border-left-color: var(--cat-emotions-color); }
+.carte-routine.cat-energie       { border-left-color: var(--cat-energie-color); }
 
 .carte-entete {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 8px;
 }
 
+/* Badges de catégorie */
 .carte-categorie {
-  font-size: 0.72rem;
-  font-weight: 600;
+  font-size: 0.7rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--couleur-principale);
-  background: #eef4f0;
-  padding: 3px 8px;
+  letter-spacing: 0.6px;
+  padding: 3px 9px;
   border-radius: 10px;
+  color: var(--teal);
+  background: var(--teal-light);
 }
 
+.carte-categorie.cat-stress        { color: var(--cat-stress-color);        background: var(--cat-stress-bg); }
+.carte-categorie.cat-sommeil       { color: var(--cat-sommeil-color);       background: var(--cat-sommeil-bg); }
+.carte-categorie.cat-concentration { color: var(--cat-concentration-color); background: var(--cat-concentration-bg); }
+.carte-categorie.cat-mouvement     { color: var(--cat-mouvement-color);     background: var(--cat-mouvement-bg); }
+.carte-categorie.cat-emotions      { color: var(--cat-emotions-color);      background: var(--cat-emotions-bg); }
+.carte-categorie.cat-energie       { color: var(--cat-energie-color);       background: var(--cat-energie-bg); }
+
 .carte-premium {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--couleur-premium);
-  background: #fdf8e7;
-  padding: 3px 8px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--gold);
+  background: var(--gold-light);
+  padding: 3px 9px;
   border-radius: 10px;
 }
 
 .carte-titre {
   font-size: 1rem;
   font-weight: 600;
-  margin-bottom: 6px;
-  line-height: 1.3;
+  margin-bottom: 5px;
+  line-height: 1.35;
+  color: var(--text);
 }
 
 .carte-description {
   font-size: 0.84rem;
-  color: var(--couleur-texte-doux);
-  line-height: 1.5;
+  color: var(--text-soft);
+  line-height: 1.55;
   margin-bottom: 12px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
 .carte-meta {
   display: flex;
-  gap: 12px;
+  align-items: center;
+  gap: 6px;
   font-size: 0.78rem;
-  color: var(--couleur-texte-doux);
+  color: var(--text-soft);
 }
 
-.carte-meta span::before { margin-right: 4px; }
+.meta-item { font-weight: 500; }
 
-/* ── État de chargement ───────────────────────────────────────────── */
+.meta-sep {
+  color: var(--border);
+  font-size: 0.9rem;
+}
+
+/* ── États ────────────────────────────────────────────────────────── */
 .chargement {
   text-align: center;
   padding: 40px 20px;
-  color: var(--couleur-texte-doux);
+  color: var(--text-soft);
   font-size: 0.9rem;
 }
 
 .erreur {
   text-align: center;
-  padding: 30px 20px;
-  color: #c0392b;
-  background: #fdf0ef;
-  border-radius: var(--rayon-bordure);
+  padding: 28px 20px;
+  color: #C94040;
+  background: #FDF0F0;
+  border-radius: var(--radius);
   font-size: 0.88rem;
+  border: 1px solid #F0C0C0;
+  line-height: 1.6;
 }
 
-/* ── Page de détail d'une routine ─────────────────────────────────── */
-.retour-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: white;
-  text-decoration: none;
-  font-size: 0.88rem;
-  opacity: 0.9;
-  margin-bottom: 4px;
-}
-
+/* ── Page de détail ───────────────────────────────────────────────── */
 .routine-titre {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.3;
+  color: white;
 }
 
 .routine-meta-badges {
@@ -217,138 +294,241 @@ body {
   font-weight: 600;
   padding: 5px 12px;
   border-radius: 20px;
-  background: #eef4f0;
-  color: var(--couleur-principale);
+  background: var(--teal-light);
+  color: var(--teal);
+  border: 1px solid rgba(43, 126, 160, 0.15);
 }
 
 .routine-description {
   font-size: 0.92rem;
-  color: var(--couleur-texte-doux);
-  line-height: 1.6;
+  color: var(--text-soft);
+  line-height: 1.65;
   margin-bottom: 24px;
   padding: 14px 16px;
-  background: var(--couleur-fond-carte);
+  background: var(--card);
   border-radius: 10px;
-  border-left: 3px solid var(--couleur-principale);
+  border-left: 3px solid var(--teal);
+  box-shadow: var(--shadow);
 }
 
 /* ── Étapes ───────────────────────────────────────────────────────── */
-.etapes-container { margin-bottom: 30px; }
+.etapes-container { margin-bottom: 28px; }
 
 .etapes-titre {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  margin-bottom: 14px;
-  color: var(--couleur-texte);
+  margin-bottom: 12px;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .etape {
   display: flex;
   gap: 14px;
   padding: 14px 0;
-  border-bottom: 1px solid var(--couleur-bordure);
-  transition: opacity 0.2s ease;
+  border-bottom: 1px solid var(--border);
+  transition: opacity 0.25s ease;
 }
 
 .etape:last-child { border-bottom: none; }
 
-.etape.completee { opacity: 0.45; }
+.etape.completee { opacity: 0.4; }
 
 .etape-numero {
   width: 30px;
   height: 30px;
   min-width: 30px;
   border-radius: 50%;
-  background: var(--couleur-principale);
+  background: var(--teal);
   color: white;
   font-size: 0.82rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
-.etape.completee .etape-numero { background: #b0c9b8; }
+.etape.completee .etape-numero {
+  background: var(--border);
+  color: var(--text-soft);
+}
 
 .etape-texte {
   font-size: 0.93rem;
-  line-height: 1.55;
+  line-height: 1.6;
   padding-top: 4px;
 }
 
 /* ── Minuteur ─────────────────────────────────────────────────────── */
 .minuteur-bloc {
-  background: var(--couleur-fond-carte);
-  border-radius: var(--rayon-bordure);
-  padding: 20px;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 22px 20px;
   text-align: center;
-  box-shadow: var(--ombre-carte);
+  box-shadow: var(--shadow);
   margin-bottom: 20px;
-  border: 1.5px solid var(--couleur-bordure);
+  border: 1px solid var(--border);
 }
 
 .minuteur-affichage {
   font-size: 3rem;
   font-weight: 700;
-  color: var(--couleur-principale);
-  letter-spacing: 2px;
-  margin-bottom: 16px;
+  color: var(--teal);
+  letter-spacing: 3px;
+  margin-bottom: 18px;
   font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
 }
 
 .minuteur-controles {
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .btn-minuteur {
-  padding: 10px 24px;
+  padding: 10px 22px;
   border-radius: 24px;
   border: none;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
+  font-family: var(--font);
 }
 
 .btn-principal {
-  background: var(--couleur-principale);
+  background: var(--teal);
   color: white;
-  min-width: 110px;
+  min-width: 120px;
 }
 
-.btn-principal:hover { background: var(--couleur-principale-claire); }
+.btn-principal:hover { background: var(--teal-dark); }
 
 .btn-secondaire {
-  background: var(--couleur-fond);
-  color: var(--couleur-texte-doux);
-  border: 1.5px solid var(--couleur-bordure);
+  background: var(--bg);
+  color: var(--text-soft);
+  border: 1.5px solid var(--border);
 }
 
-.btn-secondaire:hover { background: var(--couleur-bordure); }
+.btn-secondaire:hover { background: var(--border); }
 
-/* ── Bouton commencer ─────────────────────────────────────────────── */
+/* ── Bouton d'action principal ────────────────────────────────────── */
 .btn-commencer {
   display: block;
   width: 100%;
   padding: 16px;
-  background: var(--couleur-principale);
+  background: var(--teal);
   color: white;
   border: none;
-  border-radius: var(--rayon-bordure);
+  border-radius: var(--radius);
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
   text-align: center;
-  margin-top: 24px;
+  margin-top: 8px;
   transition: background 0.15s ease;
+  font-family: var(--font);
+  letter-spacing: 0.2px;
 }
 
-.btn-commencer:hover { background: var(--couleur-principale-claire); }
+.btn-commencer:hover  { background: var(--teal-dark); }
+.btn-commencer:disabled {
+  background: var(--border);
+  color: var(--text-soft);
+  cursor: default;
+}
+
+/* ── Label minuteur ───────────────────────────────────────────────── */
+.minuteur-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-soft);
+  margin-bottom: 10px;
+}
+
+/* ── Barre de progression ─────────────────────────────────────────── */
+.progression-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.progression-barre {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progression-remplissage {
+  height: 100%;
+  background: linear-gradient(90deg, var(--teal), var(--green));
+  border-radius: 10px;
+  transition: width 0.4s ease;
+}
+
+.progression-texte {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-soft);
+  white-space: nowrap;
+}
+
+/* ── Animations d'entrée ──────────────────────────────────────────── */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.carte-routine {
+  animation: fadeSlideUp 0.25s ease both;
+}
+
+.carte-routine:nth-child(1)  { animation-delay: 0.02s; }
+.carte-routine:nth-child(2)  { animation-delay: 0.06s; }
+.carte-routine:nth-child(3)  { animation-delay: 0.10s; }
+.carte-routine:nth-child(4)  { animation-delay: 0.14s; }
+.carte-routine:nth-child(5)  { animation-delay: 0.18s; }
+.carte-routine:nth-child(6)  { animation-delay: 0.22s; }
+.carte-routine:nth-child(n+7){ animation-delay: 0.26s; }
+
+/* ── Squelette de chargement ──────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.squelette {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--border);
+}
+
+.squelette-ligne {
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #f0ebe4 25%, #e8e2d8 50%, #f0ebe4 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite;
+  margin-bottom: 10px;
+}
+
+.squelette-ligne--courte { width: 40%; }
+.squelette-ligne--longue  { width: 90%; }
+.squelette-ligne--milieu  { width: 65%; }
 
 /* ── Responsive ───────────────────────────────────────────────────── */
 @media (max-width: 380px) {
-  .app-content { padding: 16px 12px; }
-  .minuteur-affichage { font-size: 2.4rem; }
+  .app-content { padding: 16px 12px 28px; }
+  .minuteur-affichage { font-size: 2.5rem; }
+  .header-logo { height: 44px; }
 }

@@ -12,7 +12,7 @@ function formaterTemps(secondes) {
 function demarrerMinuteur() {
   if (minuteurActif) return;
   minuteurActif = true;
-  document.getElementById('btn-play').textContent = '⏸ Pause';
+  document.getElementById('btn-play').textContent = 'Pause';
 
   minuteurInterval = setInterval(() => {
     secondesRestantes--;
@@ -21,9 +21,8 @@ function demarrerMinuteur() {
     if (secondesRestantes <= 0) {
       clearInterval(minuteurInterval);
       minuteurActif = false;
-      document.getElementById('btn-play').textContent = '▶ Démarrer';
+      document.getElementById('btn-play').textContent = 'Démarrer';
       document.getElementById('minuteur-affichage').textContent = '00:00';
-      // Vibration de fin sur mobile
       if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
     }
   }, 1000);
@@ -32,7 +31,7 @@ function demarrerMinuteur() {
 function pauseMinuteur() {
   clearInterval(minuteurInterval);
   minuteurActif = false;
-  document.getElementById('btn-play').textContent = '▶ Reprendre';
+  document.getElementById('btn-play').textContent = 'Reprendre';
 }
 
 function reinitialiserMinuteur(dureeMinutes) {
@@ -40,16 +39,16 @@ function reinitialiserMinuteur(dureeMinutes) {
   minuteurActif = false;
   secondesRestantes = dureeMinutes * 60;
   document.getElementById('minuteur-affichage').textContent = formaterTemps(secondesRestantes);
-  document.getElementById('btn-play').textContent = '▶ Démarrer';
+  document.getElementById('btn-play').textContent = 'Démarrer';
 }
 
 // ── Affichage de la routine ────────────────────────────────────────
 function construireContenu(routine) {
   const badges = [
-    `<span class="badge">⏱ ${routine.duree_minutes} min</span>`,
-    `<span class="badge">📍 ${routine.moment || 'N\'importe quand'}</span>`,
-    `<span class="badge">📊 ${routine.niveau}</span>`,
-    `<span class="badge">👤 ${routine.profil_cible}</span>`,
+    `<span class="badge">${routine.duree_minutes} min</span>`,
+    `<span class="badge">${routine.moment || 'Tout moment'}</span>`,
+    `<span class="badge">${routine.niveau}</span>`,
+    `<span class="badge">${routine.profil_cible}</span>`,
   ].join('');
 
   const etapesHTML = routine.etapes
@@ -67,25 +66,31 @@ function construireContenu(routine) {
 
     <div class="routine-description">${routine.description || ''}</div>
 
-    <!-- Minuteur -->
     <div class="minuteur-bloc">
+      <div class="minuteur-label">Durée de la séance</div>
       <div class="minuteur-affichage" id="minuteur-affichage">
         ${formaterTemps(routine.duree_minutes * 60)}
       </div>
       <div class="minuteur-controles">
-        <button class="btn-minuteur btn-secondaire" id="btn-reset">↺ Réinitialiser</button>
-        <button class="btn-minuteur btn-principal" id="btn-play">▶ Démarrer</button>
+        <button class="btn-minuteur btn-secondaire" id="btn-reset">Réinitialiser</button>
+        <button class="btn-minuteur btn-principal" id="btn-play">Démarrer</button>
       </div>
     </div>
 
-    <!-- Étapes -->
     <div class="etapes-container">
-      <div class="etapes-titre">Les étapes (${routine.etapes.length})</div>
+      <div class="etapes-titre">Étapes — ${routine.etapes.length} au total</div>
       <div id="liste-etapes">${etapesHTML}</div>
     </div>
 
+    <div class="progression-container" id="progression-container">
+      <div class="progression-barre">
+        <div class="progression-remplissage" id="progression-remplissage" style="width: 0%"></div>
+      </div>
+      <span class="progression-texte" id="progression-texte">0 / ${routine.etapes.length}</span>
+    </div>
+
     <button class="btn-commencer" id="btn-etape-suivante">
-      Marquer l'étape 1 comme faite ✓
+      Marquer l'étape 1 comme faite
     </button>
   `;
 }
@@ -93,8 +98,8 @@ function construireContenu(routine) {
 function initialiserInteractions(routine) {
   secondesRestantes = routine.duree_minutes * 60;
   let etapeActuelle = 1;
+  const totalEtapes = routine.etapes.length;
 
-  // Minuteur
   document.getElementById('btn-play').addEventListener('click', () => {
     minuteurActif ? pauseMinuteur() : demarrerMinuteur();
   });
@@ -103,23 +108,28 @@ function initialiserInteractions(routine) {
     reinitialiserMinuteur(routine.duree_minutes);
   });
 
-  // Navigation par étapes
   const btnSuivant = document.getElementById('btn-etape-suivante');
+  const progressionRemplissage = document.getElementById('progression-remplissage');
+  const progressionTexte = document.getElementById('progression-texte');
 
   btnSuivant.addEventListener('click', () => {
     const etapeEl = document.getElementById(`etape-${etapeActuelle}`);
     if (etapeEl) etapeEl.classList.add('completee');
 
+    const pct = Math.round((etapeActuelle / totalEtapes) * 100);
+    progressionRemplissage.style.width = `${pct}%`;
+    progressionTexte.textContent = `${etapeActuelle} / ${totalEtapes}`;
+
     etapeActuelle++;
 
-    if (etapeActuelle > routine.etapes.length) {
-      btnSuivant.textContent = '🎉 Routine terminée !';
+    if (etapeActuelle > totalEtapes) {
+      btnSuivant.textContent = 'Routine terminée';
       btnSuivant.disabled = true;
-      btnSuivant.style.background = '#b0c9b8';
+      progressionRemplissage.style.width = '100%';
+      progressionTexte.textContent = `${totalEtapes} / ${totalEtapes}`;
       clearInterval(minuteurInterval);
     } else {
-      btnSuivant.textContent = `Marquer l'étape ${etapeActuelle} comme faite ✓`;
-      // Défilement vers la prochaine étape
+      btnSuivant.textContent = `Marquer l'étape ${etapeActuelle} comme faite`;
       document.getElementById(`etape-${etapeActuelle}`)?.scrollIntoView({
         behavior: 'smooth', block: 'center'
       });

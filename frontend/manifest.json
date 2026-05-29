@@ -4,8 +4,8 @@
   "description": "Micro-routines de bien-être en français",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f8f5f0",
-  "theme_color": "#4a7c59",
+  "background_color": "#F5F0E8",
+  "theme_color": "#2B7EA0",
   "orientation": "portrait",
   "lang": "fr",
   "icons": [

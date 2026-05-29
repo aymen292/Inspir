@@ -1,38 +1,50 @@
-const emojisCategorie = {
-  Stress: '😮‍💨',
-  Sommeil: '🌙',
-  Concentration: '🎯',
-  Mouvement: '🤸',
-  Émotions: '💚',
-  Énergie: '⚡',
+const categorieSlug = {
+  Stress:         'stress',
+  Sommeil:        'sommeil',
+  Concentration:  'concentration',
+  Mouvement:      'mouvement',
+  Émotions:       'emotions',
+  Énergie:        'energie',
 };
 
 function construireCarte(routine) {
-  const emoji = emojisCategorie[routine.categorie] || '✨';
+  const slug = categorieSlug[routine.categorie] || '';
   const premiumBadge = routine.is_premium
-    ? `<span class="carte-premium">⭐ Premium</span>`
+    ? `<span class="carte-premium">Premium</span>`
     : '';
 
   return `
-    <a class="carte-routine" href="/routine.html?id=${routine.id}">
+    <a class="carte-routine cat-${slug}" href="/routine.html?id=${routine.id}">
       <div class="carte-entete">
-        <span class="carte-categorie">${emoji} ${routine.categorie}</span>
+        <span class="carte-categorie cat-${slug}">${routine.categorie}</span>
         ${premiumBadge}
       </div>
       <div class="carte-titre">${routine.titre}</div>
       <div class="carte-description">${routine.description || ''}</div>
       <div class="carte-meta">
-        <span>⏱ ${routine.duree_minutes} min</span>
-        <span>📍 ${routine.moment || 'N\'importe quand'}</span>
-        <span>📊 ${routine.niveau}</span>
+        <span class="meta-item">${routine.duree_minutes} min</span>
+        <span class="meta-sep">·</span>
+        <span class="meta-item">${routine.moment || 'Tout moment'}</span>
+        <span class="meta-sep">·</span>
+        <span class="meta-item">${routine.niveau}</span>
       </div>
     </a>
   `;
 }
 
+function squelette() {
+  return `
+    <div class="squelette">
+      <div class="squelette-ligne squelette-ligne--courte"></div>
+      <div class="squelette-ligne squelette-ligne--longue"></div>
+      <div class="squelette-ligne squelette-ligne--milieu"></div>
+    </div>
+  `;
+}
+
 async function afficherRoutines(categorie = '') {
   const conteneur = document.getElementById('liste-routines');
-  conteneur.innerHTML = '<p class="chargement">Chargement…</p>';
+  conteneur.innerHTML = [1, 2, 3, 4].map(squelette).join('');
 
   try {
     const filtres = categorie ? { categorie } : {};
@@ -50,7 +62,6 @@ async function afficherRoutines(categorie = '') {
   }
 }
 
-// Gestion des filtres
 document.getElementById('filtres-categorie').addEventListener('click', (e) => {
   const btn = e.target.closest('.filtre-btn');
   if (!btn) return;
@@ -61,5 +72,4 @@ document.getElementById('filtres-categorie').addEventListener('click', (e) => {
   afficherRoutines(btn.dataset.categorie);
 });
 
-// Chargement initial
 afficherRoutines();
