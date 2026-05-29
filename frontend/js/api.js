@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:8000/api';
+const API_BASE = 'http://192.168.1.33:8000/api';
 
 /**
  * Récupère la liste des routines avec filtres optionnels.
