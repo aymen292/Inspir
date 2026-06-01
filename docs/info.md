@@ -13,12 +13,12 @@
 `pg_isready` Afin de vérifier 
 
 ### Redis (docker) : 
-`docker start redis-bienetre`
+`docker start redis-bienetre`<br> 
 `docker exec -it redis-bienetre redis-cli ping` afin de verifier 
 Attendu : PONG 
 
 ### Lancer le FastAPI 
-`uvicorn app.main:app --reload`
+`uvicorn app.main:app --reload --host 0.0.0.0`
 
 ### Fin de session : 
 ```bash 
@@ -26,3 +26,7 @@ brew services stop postgresql@14
 docker stop redis-bienetre 
 ``` 
 
+## Activation de la commande dans le terminal :  <br> 
+`source ~/.zshrc` <br> 
+
+ensuite j'ai juste a ecrire `inspir` 
